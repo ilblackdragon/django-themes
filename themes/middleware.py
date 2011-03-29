@@ -9,7 +9,7 @@ class ThemesMiddleware(object):
         request.theme = THEMES_MANAGER.default
         if request.user.is_authenticated():
             try:
-                request.theme = THEMES_MANAGER.get_theme(Theme.objects.get(user=request.user).theme
+                request.theme = THEMES_MANAGER.get_theme(Theme.objects.get(user=request.user).theme)
             except Theme.DoesNotExist:
                 pass
                 
