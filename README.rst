@@ -4,6 +4,10 @@ django-themes
 ##############
 
 **Django themes** is django application that brings a flexible, configurable theming system to any Django project.
+Main features: 
+    - Different templates and statis\media on different themes.
+    - Each user can use own theme
+    - Overriding templates from default theme
 
 .. contents::
 
@@ -30,6 +34,10 @@ Setup
 
   INSTALLED_APPS += ( 'themes', )
 
+- Add 'themes.loaders.themes.Loader' to TEMPLATE_LOADERS ::
+
+  TEMPLATE_LOADERS += ('themes.loaders.themes.Loader', )
+
 - Add 'themes.middleware.ThemesMiddleware' to MIDDLEWARE_CLASSES ::
 
   MIDDLEWARE_CLASSES += ( 'themes.middleware.ThemesMiddleware', )
@@ -42,10 +50,16 @@ Setup
 
   url(r'^themes/', include('themes.urls')),   
 
-- See services setup bellow.
+- See how to configure themes below.
 
+
+Setup themes
+------------
+
+Will be added later
 
 Use themes
 ------------
 
 Will be added later
+
