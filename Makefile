@@ -1,4 +1,4 @@
-MODULE=django-netauth
+MODULE=django-themes
 
 clean:
 	sudo rm -rf build dist $(MODULE).egg-info
