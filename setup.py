@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup, find_packages
 
-from netauth import VERSION, PROJECT
+from themes import VERSION, PROJECT
 
 
 MODULE_NAME = 'themes'
