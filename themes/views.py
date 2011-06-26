@@ -19,8 +19,8 @@ def change(request, theme_id=None, template_name="themes/change.html"):
         return redirect('themes_change')
     else:
         try:
-            theme = Theme.objects.get(user=request.user)
-            current_theme_id = theme.id
+            theme_info = Theme.objects.get(user=request.user)
+            current_theme_id = theme_info.theme
         except Theme.DoesNotExist:
             theme = THEMES_MANAGER.DEFAULT_THEME
     return direct_to_template(request, template_name, {'themes': THEMES_MANAGER.themes, 'current_theme_id': current_theme_id})
