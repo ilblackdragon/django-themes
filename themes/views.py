@@ -12,10 +12,9 @@ from themes.models import Theme
 @login_required
 def change(request, theme_id=None, template_name="themes/change.html"):
     if theme_id:
-        profile = request.user.get_profile()
-        profile.theme = theme_id
-        profile.save()
-        current_theme_id = theme_id
+        theme = Theme.objects.get_or_create(user=request.user)
+        theme.theme = theme_id
+        theme.save()
         return redirect('themes_change')
     else:
         try:
