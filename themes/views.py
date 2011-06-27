@@ -12,7 +12,7 @@ from themes.models import Theme
 @login_required
 def change(request, theme_id=None, template_name="themes/change.html"):
     if theme_id:
-        theme = Theme.objects.get_or_create(user=request.user)
+        theme, is_new = Theme.objects.get_or_create(user=request.user)
         theme.theme = theme_id
         theme.save()
         return redirect('themes_change')
