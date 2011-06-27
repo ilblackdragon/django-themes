@@ -54,3 +54,7 @@ class ThemesManager(object):
     def set_default(self, index):
         if index < len(self.themes):
             self.default = self.themes[index]
+
+    def get_default(self):
+        return self.default
+
