@@ -19,7 +19,7 @@ class Loader(BaseLoader):
         request = getattr(settings, 'request_handler', None)
         if not template_dirs:
             if request:
-                template_dirs = (request.theme.template_dir, )
+                template_dirs = request.theme.template_dir_list
             else:
                 template_dirs = settings.TEMPLATE_DIRS
         for template_dir in template_dirs:

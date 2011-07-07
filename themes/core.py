@@ -28,6 +28,13 @@ class Theme(object):
             return self.template_dir_release
 
     @property
+    def template_dir_list(self):
+        if settings.DEBUG_THEME:
+            return (self.template_dir_debug, )
+        else:
+            return (self.template_dir_release, self.template_dir_debug)
+            
+    @property
     def media_url(self):
         if settings.DEBUG_THEME:
             return self.media_url_debug
