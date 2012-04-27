@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Theme(object):
     
-    def __init__(self, name, description, screenshot, template_dir, media_url):
+    def __init__(self, name, description, screenshot, template_dir, static_url):
         self.name = name
         self.description = description
         self.screenshot = screenshot
@@ -14,11 +14,11 @@ class Theme(object):
             self.template_dir_release = template_dir + '_release'
         else:
             self.template_dir_release = template_dir
-        self.media_url_debug = media_url
-        if exists(media_url[1:-1] + '_release'):
-            self.media_url_release = media_url[:-1] + '_release/'
+        self.static_url_debug = static_url
+        if exists(static_url[1:-1] + '_release'):
+            self.static_url_release = static_url[:-1] + '_release/'
         else:
-            self.media_url_release = media_url
+            self.static_url_release = static_url
         
     @property
     def template_dir(self):
@@ -35,11 +35,11 @@ class Theme(object):
             return (self.template_dir_release, self.template_dir_debug)
             
     @property
-    def media_url(self):
+    def static_url(self):
         if settings.DEBUG_THEME:
-            return self.media_url_debug
+            return self.static_url_debug
         else:
-            return self.media_url_release
+            return self.static_url_release
             
 class ThemesManager(object):
     

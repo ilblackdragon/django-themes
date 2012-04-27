@@ -56,7 +56,40 @@ Setup
 Setup themes
 ------------
 
-Will be added later
+themes_settings.py::
+
+    import os.path
+    from themes.core import Theme, ThemesManager
+    from django.utils.translation import ugettext_lazy as _
+
+    PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+                                                                                                                                                                                                                           
+    THEMES_MANAGER = ThemesManager()                                                                                                                                                                                       
+                                                                                                                                                                                                                           
+    THEMES_MANAGER.add_theme(Theme(                                                                                                                                                                                        
+            name = _("First Theme"),                                                                                                                                                                                     
+            description = _("Theme #1"),                                                                                                                                                                              
+            screenshot = "/static/theme1/screenshot.png",
+            template_dir = os.path.join(PROJECT_ROOT, "templates/theme1"),
+            static_url = "/static/theme1/",
+    ))
+
+    THEMES_MANAGER.add_theme(Theme(
+            name = _("Second Theme"),
+            description = _("Theme #2"),
+            screenshot = "/static/theme2/screenshot.png",
+            template_dir = os.path.join(PROJECT_ROOT, "templates/theme2"),
+            static_url = "/static/theme2/",
+    ))
+
+    THEMES_MANAGER.set_default(0)
+
+settings.py::
+
+    try:
+        from themes_settings import *
+    except ImportError:
+        pass
 
 Use themes
 ------------

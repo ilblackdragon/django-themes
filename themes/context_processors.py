@@ -7,6 +7,6 @@ def themes(request):
     Returns context variables containing information about theme.
     """
     return {
-        'MEDIA_URL': request.theme.media_url,
+        'THEME_STATIC_URL': request.theme.static_url,
         'STATIC_URL': settings.STATIC_URL
     }
