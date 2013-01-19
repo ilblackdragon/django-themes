@@ -4,7 +4,12 @@ from django.conf import settings
 #DEBUG_THEME = getattr(settings, 'DEBUG_THEME', True)
 
 class Theme(object):
-    
+
+    DEFAULT_TEMPLATE_DIR = getattr(settings, 'DEFAULT_TEMPLATE_DIR',
+        join(settings.PROJECT_ROOT, 'templates', 'default'))
+    DEFAULT_TEMPLATE_DIR_DEBUG = DEFAULT_TEMPLATE_DIR
+    DEFAULT_TEMPLATE_DIR_RELEASE = DEFAULT_TEMPLATE_DIR + '_release'
+   
     def __init__(self, name, description, screenshot, template_dir, static_url):
         self.name = name
         self.description = description
@@ -30,9 +35,9 @@ class Theme(object):
     @property
     def template_dir_list(self):
         if settings.DEBUG_THEME:
-            return (self.template_dir_debug, )
+            return (self.template_dir_debug, self.DEFAULT_TEMPLATE_DIR_DEBUG)
         else:
-            return (self.template_dir_release, self.template_dir_debug)
+            return (self.template_dir_release, self.template_dir_debug, self.DEFAULT_TEMPLATE_DIR_RELEASE, self.DEFAULT_TEMPLATE_DIR_DEBUG)
             
     @property
     def static_url(self):
