@@ -1,2 +1,2 @@
+include LICENSE
 recursive-include themes *
-exclude *.pyc *.orig
