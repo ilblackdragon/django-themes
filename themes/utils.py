@@ -12,7 +12,10 @@ def patched_find_template(name, dirs=None):
                 return find_template(join(prefix, name), dirs)
             except TemplateDoesNotExist:
                 pass
-        raise TemplateDoesNotExist(name)
+        try:
+            return find_template(name, dirs)
+        except TemplateDoesNotExist:
+            raise TemplateDoesNotExist(name)
     else:
         return find_template(name, dirs)
 
@@ -28,7 +31,10 @@ if 'coffin' in settings.INSTALLED_APPS:
                     return super(CoffinEnvironment, self)._load_template(join(prefix, name), globals)
                 except TemplateNotFound:
                     pass
-            TemplateNotFound(name)
+            try:
+                return super(CoffinEnvironment, self)._load_template(name, globals)
+            except TemplateNotFound:
+                raise TemplateNotFound(name)
         else:
             return super(CoffinEnvironment, self)._load_template(name, globals)
 
