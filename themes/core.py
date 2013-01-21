@@ -5,8 +5,7 @@ from django.conf import settings
 
 class Theme(object):
 
-    DEFAULT_TEMPLATE_DIR = getattr(settings, 'DEFAULT_TEMPLATE_DIR',
-        join(settings.PROJECT_ROOT, 'templates', 'default'))
+    DEFAULT_TEMPLATE_DIR = getattr(settings, 'DEFAULT_TEMPLATE_DIR', 'default')
     DEFAULT_TEMPLATE_DIR_DEBUG = DEFAULT_TEMPLATE_DIR
     DEFAULT_TEMPLATE_DIR_RELEASE = DEFAULT_TEMPLATE_DIR + '_release'
    

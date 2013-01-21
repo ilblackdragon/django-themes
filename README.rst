@@ -8,6 +8,7 @@ Main features:
     - Different templates and statis\media on different themes.
     - Each user can use own theme
     - Overriding templates from default theme
+    - Support Jinja2
 
 .. contents::
 
@@ -17,6 +18,10 @@ Requirements
 - python >= 2.5
 - django >= 1.2
 - pip >= 0.8
+
+Optional:
+- jinja2
+- coffin
 
 
 Installation
@@ -34,10 +39,6 @@ Setup
 
   INSTALLED_APPS += ( 'themes', )
 
-- Add 'themes.loaders.themes.Loader' to TEMPLATE_LOADERS ::
-
-  TEMPLATE_LOADERS += ('themes.loaders.themes.Loader', )
-
 - Add 'themes.middleware.ThemesMiddleware' to MIDDLEWARE_CLASSES ::
 
   MIDDLEWARE_CLASSES += ( 'themes.middleware.ThemesMiddleware', )
@@ -51,6 +52,14 @@ Setup
   url(r'^themes/', include('themes.urls')),   
 
 - See how to configure themes below.
+
+Note: if you have any trouble with setuping because of our monkey patchings django's `find_template`
+and coffin `env`, you can use alternative method by using TEMPLATE_LOADERS:
+
+- Add 'themes.loaders.themes.Loader' to TEMPLATE_LOADERS and enable special option::
+
+  THEMES_USE_TEMPLATE_LOADERS = True
+  TEMPLATE_LOADERS += ('themes.loaders.themes.Loader', )
 
 
 Setup themes
@@ -70,7 +79,10 @@ themes_settings.py::
             name = _("First Theme"),                                                                                                                                                                                     
             description = _("Theme #1"),                                                                                                                                                                              
             screenshot = "/static/theme1/screenshot.png",
-            template_dir = os.path.join(PROJECT_ROOT, "templates/theme1"),
+            template_dir = "theme1",
+            # If you will use TEMPLATE_LOADERS method described in setup section,
+            # than you should specify full path
+            #template_dir = os.path.join(PROJECT_ROOT, "templates/theme1"),
             static_url = "/static/theme1/",
     ))
 
@@ -78,7 +90,10 @@ themes_settings.py::
             name = _("Second Theme"),
             description = _("Theme #2"),
             screenshot = "/static/theme2/screenshot.png",
-            template_dir = os.path.join(PROJECT_ROOT, "templates/theme2"),
+            template_dir = "theme2",
+            # If you will use TEMPLATE_LOADERS method described in setup section,
+            # than you should specify full path
+            #template_dir = os.path.join(PROJECT_ROOT, "templates/theme2"),
             static_url = "/static/theme2/",
     ))
 
@@ -99,6 +114,6 @@ Will be added later
 License
 -----------
 
-Copyright (C) 2011 Ilya Polosukhin
+Copyright (C) 2011-2013 Ilya Polosukhin and Vlad Frolov
 This program is licensed under the MIT License (see LICENSE)
  
