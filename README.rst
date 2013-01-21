@@ -4,11 +4,13 @@ django-themes
 ##############
 
 **Django themes** is django application that brings a flexible, configurable theming system to any Django project.
+
 Main features: 
-    - Different templates and statis\media on different themes.
-    - Each user can use own theme
-    - Overriding templates from default theme
-    - Support Jinja2
+
+- Different templates and statis\media for different themes.
+- Each user can choose different theme to use
+- Overriding templates from default theme
+- Support Jinja2
 
 .. contents::
 
@@ -20,6 +22,7 @@ Requirements
 - pip >= 0.8
 
 Optional:
+
 - jinja2
 - coffin
 
@@ -35,37 +38,37 @@ Installation
 Setup
 ------
 
-- Add 'themes' to INSTALLED_APPS ::
+- Add 'themes' to INSTALLED_APPS: ::
 
-  INSTALLED_APPS += ( 'themes', )
+    INSTALLED_APPS += ( 'themes', )
 
-- Add 'themes.middleware.ThemesMiddleware' to MIDDLEWARE_CLASSES ::
+- Add 'themes.middleware.ThemesMiddleware' to MIDDLEWARE_CLASSES: ::
 
-  MIDDLEWARE_CLASSES += ( 'themes.middleware.ThemesMiddleware', )
+    MIDDLEWARE_CLASSES += ( 'themes.middleware.ThemesMiddleware', )
 
-- Add 'themes.context_processors.themes' to TEMPLATE_CONTEXT_PROCESSORS ::
+- Add 'themes.context_processors.themes' to TEMPLATE_CONTEXT_PROCESSORS: ::
 
-  TEMPLATE_CONTEXT_PROCESSORS += ( 'themes.context_processors.themes', )
+    TEMPLATE_CONTEXT_PROCESSORS += ( 'themes.context_processors.themes', )
 
-- Add themes urls to base urls ::
+- Add themes urls to base urls: ::
 
-  url(r'^themes/', include('themes.urls')),   
+    url(r'^themes/', include('themes.urls')),   
 
 - See how to configure themes below.
 
-Note: if you have any trouble with setuping because of our monkey patchings django's `find_template`
-and coffin `env`, you can use alternative method by using TEMPLATE_LOADERS:
+Note: if you have any troubles with seting up django-themes because of our monkey patching django's `find_template`
+and coffin's `env`, you can use alternative method by adding djang-themes to TEMPLATE_LOADERS:
 
-- Add 'themes.loaders.themes.Loader' to TEMPLATE_LOADERS and enable special option::
+- Add 'themes.loaders.themes.Loader' to TEMPLATE_LOADERS and enable special option: ::
 
-  THEMES_USE_TEMPLATE_LOADERS = True
-  TEMPLATE_LOADERS += ('themes.loaders.themes.Loader', )
+    THEMES_USE_TEMPLATE_LOADERS = True
+    TEMPLATE_LOADERS += ('themes.loaders.themes.Loader', )
 
 
 Setup themes
 ------------
 
-themes_settings.py::
+Here is example themes_settings.py file to configure django-themes: ::
 
     import os.path
     from themes.core import Theme, ThemesManager
@@ -99,7 +102,7 @@ themes_settings.py::
 
     THEMES_MANAGER.set_default(0)
 
-settings.py::
+Add importing of themes_settings to settings.py::
 
     try:
         from themes_settings import *
@@ -109,7 +112,13 @@ settings.py::
 Use themes
 ------------
 
-Will be added later
+As soon as themes are setup - they are already used.
+
+Now all your templates are searched in the templates/default-theme-name folder (for example 'site_base.html' is searched in templates/theme1/site_base.html). This means that you'll need to move all your templates from templates/* to templates/default-theme-name/.
+
+If you want to override one of the templates in an another theme - you just create that file in the other template folder templates/theme2/site_base.html and change it as you want.
+
+Users can change theirs theme from http://<your domain>/themes/change (you can put a link to it in your Account Settings page). To change how themes.change page looks like just put an template themes/change.html.
 
 License
 -----------
