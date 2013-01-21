@@ -5,7 +5,7 @@ django-themes
 
 **Django themes** is django application that brings a flexible, configurable theming system to any Django project.
 
-Main features: 
+Main features:
 
 - Different templates and statis\media for different themes.
 - Each user can choose different theme to use
@@ -52,7 +52,7 @@ Setup
 
 - Add themes urls to base urls: ::
 
-    url(r'^themes/', include('themes.urls')),   
+    url(r'^themes/', include('themes.urls')),
 
 - See how to configure themes below.
 
@@ -71,36 +71,32 @@ Setup themes
 Here is example themes_settings.py file to configure django-themes: ::
 
     import os.path
-    from themes.core import Theme, ThemesManager
     from django.utils.translation import ugettext_lazy as _
 
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-                                                                                                                                                                                                                           
-    THEMES_MANAGER = ThemesManager()                                                                                                                                                                                       
-                                                                                                                                                                                                                           
-    THEMES_MANAGER.add_theme(Theme(                                                                                                                                                                                        
-            name = _("First Theme"),                                                                                                                                                                                     
-            description = _("Theme #1"),                                                                                                                                                                              
-            screenshot = "/static/theme1/screenshot.png",
-            template_dir = "theme1",
-            # If you will use TEMPLATE_LOADERS method described in setup section,
-            # than you should specify full path
-            #template_dir = os.path.join(PROJECT_ROOT, "templates/theme1"),
-            static_url = "/static/theme1/",
-    ))
 
-    THEMES_MANAGER.add_theme(Theme(
-            name = _("Second Theme"),
-            description = _("Theme #2"),
-            screenshot = "/static/theme2/screenshot.png",
-            template_dir = "theme2",
-            # If you will use TEMPLATE_LOADERS method described in setup section,
-            # than you should specify full path
-            #template_dir = os.path.join(PROJECT_ROOT, "templates/theme2"),
-            static_url = "/static/theme2/",
-    ))
+    THEMES = ({
+        'name': _("First Theme"),
+        'description': _("Theme #1"),
+        'screenshot': "/static/theme1/screenshot.png",
+        'template_dir': "theme1",
+        # If you will use TEMPLATE_LOADERS method described in setup section,
+        # than you should specify full path
+        #'template_dir': os.path.join(PROJECT_ROOT, "templates/theme1"),
+        'static_url': "/static/theme1/",
+    },
+    {
+        'name': _("Second Theme"),
+        'description': _("Theme #2"),
+        'screenshot': "/static/theme2/screenshot.png",
+        'template_dir': "theme2",
+        # If you will use TEMPLATE_LOADERS method described in setup section,
+        # than you should specify full path
+        #'template_dir': os.path.join(PROJECT_ROOT, "templates/theme2"),
+        'static_url': "/static/theme2/",
+    })
 
-    THEMES_MANAGER.set_default(0)
+    DEFAULT_THEME = 0
 
 Add importing of themes_settings to settings.py::
 
@@ -125,4 +121,4 @@ License
 
 Copyright (C) 2011-2013 Ilya Polosukhin and Vlad Frolov
 This program is licensed under the MIT License (see LICENSE)
- 
+

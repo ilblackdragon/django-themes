@@ -1,4 +1,4 @@
 from django.contrib import admin
-from themes.models import Theme
+from themes.models import UserTheme
 
-admin.site.register(Theme)
+admin.site.register(UserTheme)

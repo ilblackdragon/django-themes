@@ -1,14 +1,13 @@
 from os.path import exists, join
 from django.conf import settings
 
-#DEBUG_THEME = getattr(settings, 'DEBUG_THEME', True)
+DEBUG_THEME = getattr(settings, 'DEBUG_THEME', False)
+BASE_TEMPLATE_DIR = getattr(settings, 'THEMES_BASE_TEMPLATE_DIR', 'default')
+BASE_TEMPLATE_DIR_DEBUG = BASE_TEMPLATE_DIR
+BASE_TEMPLATE_DIR_RELEASE = BASE_TEMPLATE_DIR + '_release'
 
 class Theme(object):
-
-    DEFAULT_TEMPLATE_DIR = getattr(settings, 'DEFAULT_TEMPLATE_DIR', 'default')
-    DEFAULT_TEMPLATE_DIR_DEBUG = DEFAULT_TEMPLATE_DIR
-    DEFAULT_TEMPLATE_DIR_RELEASE = DEFAULT_TEMPLATE_DIR + '_release'
-   
+  
     def __init__(self, name, description, screenshot, template_dir, static_url):
         self.name = name
         self.description = description
@@ -26,25 +25,26 @@ class Theme(object):
         
     @property
     def template_dir(self):
-        if settings.DEBUG_THEME:
+        if DEBUG_THEME:
             return self.template_dir_debug
         else:
             return self.template_dir_release
 
     @property
     def template_dir_list(self):
-        if settings.DEBUG_THEME:
-            return (self.template_dir_debug, self.DEFAULT_TEMPLATE_DIR_DEBUG)
+        if DEBUG_THEME:
+            return (self.template_dir_debug, BASE_TEMPLATE_DIR_DEBUG)
         else:
-            return (self.template_dir_release, self.template_dir_debug, self.DEFAULT_TEMPLATE_DIR_RELEASE, self.DEFAULT_TEMPLATE_DIR_DEBUG)
+            return (self.template_dir_release, self.template_dir_debug, BASE_TEMPLATE_DIR_RELEASE, BASE_TEMPLATE_DIR_DEBUG)
             
     @property
     def static_url(self):
-        if settings.DEBUG_THEME:
+        if DEBUG_THEME:
             return self.static_url_debug
         else:
             return self.static_url_release
-            
+ 
+
 class ThemesManager(object):
     
     Manager = None
