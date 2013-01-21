@@ -5,22 +5,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.conf import settings
 
-THEMES_MANAGER = getattr(settings, 'THEMES_MANAGER', None)
+from themes.models import UserTheme
 
-from themes.models import Theme
+THEMES = getattr(settings, 'THEMES', None)
 
 @login_required
 def change(request, theme_id=None, template_name="themes/change.html"):
     if theme_id:
-        theme, is_new = Theme.objects.get_or_create(user=request.user)
+        theme, is_new = UserTheme.objects.get_or_create(user=request.user)
         theme.theme = theme_id
         theme.save()
         return redirect('themes_change')
     else:
         try:
-            theme_info = Theme.objects.get(user=request.user)
+            theme_info = UserTheme.objects.get(user=request.user)
             current_theme_id = theme_info.theme
         except Theme.DoesNotExist:
             current_theme_id = THEMES_MANAGER.get_default()
-    return direct_to_template(request, template_name, {'themes': THEMES_MANAGER.themes, 'current_theme_id': current_theme_id})
+    return direct_to_template(request, template_name, {'themes': THEMES, 'current_theme_id': current_theme_id})
 
