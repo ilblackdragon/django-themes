@@ -6,7 +6,11 @@ def themes(request):
     """
     Returns context variables containing information about theme.
     """
-    return {
-        'THEME_STATIC_URL': request.theme.static_url,
-        'STATIC_URL': settings.STATIC_URL
+    context = {
+        'STATIC_URL': settings.STATIC_URL,
+        'THEME_STATIC_URL': settings.STATIC_URL
     }
+    theme = getattr(request, 'theme', None)
+    if theme is not None:
+        context['THEME_STATIC_URL'] = request.theme.static_url
+    return context
