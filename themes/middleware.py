@@ -31,6 +31,5 @@ class ThemesMiddleware(object):
         if request.user.is_authenticated():
             try:
                 request.theme = self.themes_manager.get_theme(UserTheme.objects.get(user=request.user).theme)
-            except Theme.DoesNotExist:
+            except UserTheme.DoesNotExist:
                 pass
-                
