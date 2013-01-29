@@ -17,7 +17,7 @@ class ThemesMiddleware(object):
         themes = getattr(settings, 'THEMES', None)
         if not themes:
             logger.warning("There is no themes specified. Themes middleware will be disabled.")
-            raise MiddlewareNotUsen()
+            raise MiddlewareNotUsed()
         for theme in themes:
             self.themes_manager.add_theme(Theme(**theme))
         default_theme = getattr(settings, 'DEFAULT_THEME', 0)
