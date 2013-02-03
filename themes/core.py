@@ -55,6 +55,7 @@ class ThemesManager(object):
         self.default = None
         
     def add_theme(self, theme):
+        theme.id = len(self.themes)
         self.themes.append(theme)
     
     def get_theme(self, index):
