@@ -1,4 +1,5 @@
 from os.path import join
+import types
 
 from django.conf import settings
 from django.template.base import TemplateDoesNotExist
@@ -19,10 +20,12 @@ def patched_find_template(name, dirs=None):
     else:
         return find_template(name, dirs)
 
-if 'coffin' in settings.INSTALLED_APPS:
+try:
     from coffin.common import CoffinEnvironment
     from jinja2.exceptions import TemplateNotFound
-
+except ImportError:
+    pass
+else:
     def _load_template(self, name, globals):
         request = getattr(settings, 'request_handler', None)
         if request:
@@ -42,7 +45,9 @@ if 'coffin' in settings.INSTALLED_APPS:
 def monkey_patch_template_loaders():
     from django.template import loader
     loader.find_template = patched_find_template
-    if 'coffin' in settings.INSTALLED_APPS:
-        import types
+    try:
         from coffin import common
+    except ImportError:
+        pass
+    else:
         common.env._load_template = types.MethodType(_load_template, common.env)
